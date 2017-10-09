@@ -12,6 +12,10 @@ console.log("hi I am going to print the contributors on the console")
  })
 }
 
+function downloadImageByUrl(url, filePath){
+
+}
+
 function getRepoContributors(repoOwner, repoName, cb){
   // this function will get the avatars based on repository owner and repository name
 var jsonStringResponse = "";
