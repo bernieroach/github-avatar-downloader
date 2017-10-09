@@ -1,20 +1,36 @@
 var request = require('request');
+var fs = require('fs');
 
-var GITHUB_TOKEN = "16f1d14b19d113031aed29da35560b21d68046c9"
+var GITHUB_TOKEN = "bda56b65e90dba42e3f11ccfff34b18aa53c8194"
 var GITHUB_USER = 'bernieroach';
 console.log("You are going to download GitHub avatars soon");
 
 function printContributors(contributorList){
 console.log("hi I am going to print the contributors on the console")
- contributorList.forEach(function(contributor){
-  console.log(contributor.id);
-  console.log(contributor.avatar_url);
- })
+for (var avatar in contributorList){
+  console.log(contributorList[avatar].avatar_url);
+  var pathPrefix = './avatars/';
+  var pathPostfix = '.jpeg';
+ downloadImageByUrl(contributorList[avatar].avatar_url,`${pathPrefix}${contributorList[avatar].login}${pathPostfix}`);
+ }
 }
 
 function downloadImageByUrl(url, filePath){
+request.get(url).on('data',function(data){ /*console.log("DATA", data)*/})
+                        .on('response', function(response){
+                          console.log('response status', response.statusCode);
+                          console.log(response.headers['content-type']);
+                        })
+                        .on('error', function(err){
+                          throw err;
+                        })
+                        .on("end", function(){
+                            console.log("I am at the end");
+                            console.log("downloaded", url);
+                        })
+                        .pipe(fs.createWriteStream(filePath));
+                      }
 
-}
 
 function getRepoContributors(repoOwner, repoName, cb){
   // this function will get the avatars based on repository owner and repository name
@@ -32,7 +48,7 @@ console.log("string" ,urlString);
 var jsonObject = {};
 // I don't know why this doesn't work ... authorization error
 request(requestObject, function(err, response, body){
-  console.log("string in request ", urlString)
+  console.log("string in request ", requestObject)
   if(err){
     console.log(err);
     throw err;
@@ -42,6 +58,7 @@ request(requestObject, function(err, response, body){
 //  console.log(response.body);
   jsonStringResponse = body;
   jsonObject = JSON.parse(jsonStringResponse);
+  console.log(jsonObject);
   console.log("now I have the object - a list of contributors");
   console.log("pass the list to the call back")
    cb(jsonObject);
