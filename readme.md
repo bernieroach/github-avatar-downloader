@@ -7,6 +7,6 @@ Given a GitHub repository name and owner, download all the contributors' profile
 
 This program should be executed from the command line, in the following order:
 
-`node **download_avatars.js** _jsquery jsquery_`
+node **download_avatars.js** _jsquery jsquery_
 
 Add other text here.
