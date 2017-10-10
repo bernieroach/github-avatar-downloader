@@ -5,8 +5,7 @@ var GITHUB_TOKEN = "bda56b65e90dba42e3f11ccfff34b18aa53c8194"
 var GITHUB_USER = 'bernieroach';
 
 // download contributors from a list
-function printContributors(contributorList){
-  console.log("hi I am going to print the contributors on the console")
+function downloadContributors(contributorList){
   var pathPrefix = './avatars/';
   var pathPostfix = '.jpeg';
 // go through list of contibutors
@@ -24,7 +23,7 @@ function downloadImageByUrl(url, filePath){
     throw err;
   })
   .on("end", function(){
-    console.log("Downloaded" + url + " to " + filePath);
+    console.log("Downloaded " + url + " to " + filePath);
   })
   .pipe(fs.createWriteStream(filePath));
 }
@@ -74,4 +73,4 @@ function getRepoContributors(repoOwner, repoName, cb){
 
 
 // run the function.
-getRepoContributors(process.argv[2], process.argv[3],printContributors);
+getRepoContributors(process.argv[2], process.argv[3],downloadContributors);
