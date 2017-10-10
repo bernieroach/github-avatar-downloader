@@ -17,7 +17,7 @@ function printContributors(contributorList){
 }
 // download a resource and save it in a path
 function downloadImageByUrl(url, filePath){
-  request.get(url).on('data',function(data){ /*console.log("DATA", data)*/})
+  request.get(url)
   .on('response', function(response){
   })
   .on('error', function(err){
